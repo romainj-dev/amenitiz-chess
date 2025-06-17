@@ -1,5 +1,6 @@
 import { ArrowLeft, Crown } from 'lucide-react';
 import Link from 'next/link';
+import { grandmasterPath } from '@/paths';
 
 export default function NotFound() {
   return (
@@ -15,7 +16,7 @@ export default function NotFound() {
           {`The grandmaster you're looking for doesn't exist in our database.`}
         </p>
         <Link
-          href='/'
+          href={grandmasterPath()}
           className='from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 shadow-medium inline-flex items-center gap-2 rounded-lg bg-gradient-to-r px-6 py-3 font-medium text-white transition-all duration-200'
         >
           <ArrowLeft className='h-4 w-4' />
