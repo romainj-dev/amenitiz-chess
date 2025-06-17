@@ -3,8 +3,8 @@ import { grandmasterPath } from '@/paths';
 
 const HomePage = () => {
   return (
-    <div className='flex flex-1 flex-col gap-y-8'>
-      <div className='px-8'>
+    <div className='flex flex-1 flex-col gap-y-8 px-8 py-24'>
+      <div className='flex flex-1 flex-col items-center justify-center gap-y-2 px-8'>
         <h2 className='text-3xl font-bold tracking-tight'>
           Amenitiz Chess by Romain J.
         </h2>

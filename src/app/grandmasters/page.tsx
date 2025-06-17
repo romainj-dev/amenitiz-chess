@@ -1,53 +1,28 @@
-'use client';
-
-import { MapPin, Search } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
 import { grandmasters } from '@/lib/data';
 import { grandmasterDetailPath } from '@/paths';
 
-export default function GrandmastersPage() {
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const filteredGrandmasters = grandmasters.filter(
-    (gm) =>
-      gm.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      gm.name.toLowerCase().includes(searchTerm.toLowerCase()),
+function formatLastOnline(dateString: string) {
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffInHours = Math.floor(
+    (now.getTime() - date.getTime()) / (1000 * 60 * 60),
   );
 
-  const formatLastOnline = (dateString: string) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffInHours = Math.floor(
-      (now.getTime() - date.getTime()) / (1000 * 60 * 60),
-    );
+  if (diffInHours < 1) return 'Just now';
+  if (diffInHours < 24) return `${diffInHours}h ago`;
+  return `${Math.floor(diffInHours / 24)}d ago`;
+}
 
-    if (diffInHours < 1) return 'Just now';
-    if (diffInHours < 24) return `${diffInHours}h ago`;
-    return `${Math.floor(diffInHours / 24)}d ago`;
-  };
-
+export default function GrandmastersPage() {
   return (
     <div className='from-primary-50 to-accent-100 min-h-screen bg-gradient-to-br'>
       <div className='container mx-auto px-4 py-6'>
-        {/* Search Bar */}
-        <div className='mx-auto mb-8 max-w-md'>
-          <div className='relative'>
-            <Search className='text-accent-400 absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transform' />
-            <input
-              type='text'
-              placeholder='Search grandmasters...'
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className='border-accent-200 focus:ring-primary-500 shadow-soft w-full rounded-xl border bg-white py-3 pr-4 pl-10 focus:border-transparent focus:ring-2 focus:outline-none'
-            />
-          </div>
-        </div>
-
         {/* Grandmasters Grid */}
         <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
-          {filteredGrandmasters.map((grandmaster) => (
+          {grandmasters.map((grandmaster) => (
             <Link
               key={grandmaster.username}
               href={grandmasterDetailPath(grandmaster.username)}
@@ -116,7 +91,7 @@ export default function GrandmastersPage() {
         </div>
 
         {/* No Results */}
-        {filteredGrandmasters.length === 0 && (
+        {grandmasters.length === 0 && (
           <div className='py-12 text-center'>
             <div className='text-accent-400 mb-2 text-lg'>
               No grandmasters found

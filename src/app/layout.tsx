@@ -16,9 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className='antialiased'>
+      <body className='flex min-h-screen flex-col antialiased'>
         <Header />
-        {children}
+        <main className='flex flex-1 flex-col'>{children}</main>
       </body>
     </html>
   );
