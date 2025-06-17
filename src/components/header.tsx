@@ -1,4 +1,4 @@
-import { Crown, Search } from 'lucide-react';
+import { Crown } from 'lucide-react';
 import Link from 'next/link';
 import { grandmasterPath, homePath } from '@/paths';
 
@@ -45,9 +45,9 @@ function Header() {
             </Link>
           </nav>
 
-          {/* Search Icon (Mobile) */}
+          {/* Nav mobile */}
           <button className='text-accent-600 hover:text-primary-600 p-2 transition-colors md:hidden'>
-            <Search className='h-5 w-5' />
+            <Link href={grandmasterPath()}>Grandmasters</Link>
           </button>
         </div>
       </div>
