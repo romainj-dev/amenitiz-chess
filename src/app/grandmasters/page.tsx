@@ -1,10 +1,24 @@
 import Link from 'next/link';
 import { GrandmasterItem } from '@/features/grandmasters/components/grandmaster-item';
+import { Pagination } from '@/features/grandmasters/components/pagination';
 import { getGrandmasters } from '@/features/grandmasters/queries/get-grandmasters';
 import { grandmasterDetailPath } from '@/paths';
 
-const GrandmastersPage = async () => {
-  const grandmasters = await getGrandmasters();
+const ITEMS_PER_PAGE = 12;
+
+interface PageProps {
+  searchParams?: Promise<{
+    page?: string;
+  }>;
+}
+
+const GrandmastersPage = async ({ searchParams }: PageProps) => {
+  const params = await searchParams;
+  const currentPage = Number(params?.page) || 1;
+  const { data: grandmasters, totalPages } = await getGrandmasters(
+    currentPage,
+    ITEMS_PER_PAGE,
+  );
 
   return (
     <div className='from-primary-50 to-accent-100 min-h-screen bg-gradient-to-br'>
@@ -21,6 +35,8 @@ const GrandmastersPage = async () => {
             </Link>
           ))}
         </div>
+
+        <Pagination totalPages={totalPages} />
       </div>
     </div>
   );

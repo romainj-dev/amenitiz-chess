@@ -48,7 +48,7 @@ async function getGrandmastersUsernames(): Promise<string[]> {
 export async function getGrandmasters(
   page: number | undefined = 1,
   pageSize: number | undefined = 30,
-): Promise<Grandmaster[]> {
+): Promise<{ data: Grandmaster[]; totalPages: number }> {
   try {
     const usernames = await getGrandmastersUsernames();
 
@@ -61,8 +61,10 @@ export async function getGrandmasters(
       usernamesOnPage.map((username) => getGrandmaster(username)),
     );
 
-    // Transform the data to match our Grandmaster type
-    return players.filter((p) => !!p);
+    return {
+      data: players.filter((p) => !!p),
+      totalPages: Math.ceil(usernames.length / pageSize),
+    };
   } catch (error) {
     console.error('Error fetching grandmasters:', error);
     throw error;
