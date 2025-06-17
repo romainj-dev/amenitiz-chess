@@ -2,7 +2,7 @@ import { ArrowLeft, Crown } from 'lucide-react';
 import Link from 'next/link';
 import { grandmasterPath } from '@/paths';
 
-export default function NotFound() {
+const NotFound = () => {
   return (
     <div className='from-primary-50 to-accent-100 flex min-h-[calc(100vh-4rem)] items-center justify-center bg-gradient-to-br'>
       <div className='shadow-strong border-accent-200 mx-4 max-w-md rounded-xl border bg-white p-8 text-center'>
@@ -25,4 +25,6 @@ export default function NotFound() {
       </div>
     </div>
   );
-}
+};
+
+export default NotFound;

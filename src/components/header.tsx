@@ -1,14 +1,15 @@
 import { Crown, Search } from 'lucide-react';
 import Link from 'next/link';
+import { grandmasterPath, homePath } from '@/paths';
 
-export function Header() {
+function Header() {
   return (
     <header className='shadow-soft border-accent-200 sticky top-0 z-50 border-b bg-white'>
       <div className='container mx-auto px-4'>
         <div className='flex h-16 items-center justify-between'>
           {/* Logo */}
           <Link
-            href='/'
+            href={homePath()}
             className='flex items-center gap-3 transition-opacity hover:opacity-80'
           >
             <div className='from-secondary-500 to-secondary-600 shadow-medium rounded-lg bg-gradient-to-br p-2'>
@@ -25,7 +26,7 @@ export function Header() {
           {/* Navigation */}
           <nav className='hidden items-center gap-6 md:flex'>
             <Link
-              href='/'
+              href={grandmasterPath()}
               className='text-accent-600 hover:text-primary-600 font-medium transition-colors'
             >
               Grandmasters
@@ -53,3 +54,5 @@ export function Header() {
     </header>
   );
 }
+
+export { Header };

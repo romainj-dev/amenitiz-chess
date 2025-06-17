@@ -36,7 +36,7 @@ interface PageProps {
   params: Promise<{ username: string }>;
 }
 
-export default async function GrandmasterDetailPage({ params }: PageProps) {
+const GrandmasterDetailPage = async ({ params }: PageProps) => {
   const { username } = await params;
   const grandmaster = getGrandmasterByUsername(username);
 
@@ -227,4 +227,6 @@ export default async function GrandmasterDetailPage({ params }: PageProps) {
       </div>
     </div>
   );
-}
+};
+
+export default GrandmasterDetailPage;
