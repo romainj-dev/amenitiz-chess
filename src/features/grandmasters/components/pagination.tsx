@@ -3,6 +3,7 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
+import { useMediaQuery } from 'react-responsive';
 
 function createPageURL(
   pathname: string,
@@ -14,7 +15,13 @@ function createPageURL(
   return `${pathname}?${params.toString()}`;
 }
 
-function getVisiblePages(currentPage: number, totalPages: number) {
+function getVisiblePages(
+  currentPage: number,
+  totalPages: number,
+  isMobile: boolean,
+) {
+  if (isMobile) return [currentPage];
+
   const allPages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return allPages.filter(
@@ -34,7 +41,9 @@ export function Pagination({ totalPages }: PaginationProps) {
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
 
-  const visiblePages = getVisiblePages(currentPage, totalPages);
+  const isMobile = useMediaQuery({ maxWidth: 767 }); // 768px is Tailwind's md breakpoint
+
+  const visiblePages = getVisiblePages(currentPage, totalPages, isMobile);
 
   return (
     <div className='mt-8 flex items-center justify-center gap-2'>
@@ -59,7 +68,7 @@ export function Pagination({ totalPages }: PaginationProps) {
               href={createPageURL(pathname, searchParams, page)}
               className={`flex items-center justify-center rounded-md border px-4 py-2 ${
                 currentPage === page
-                  ? 'bg-primary-500 text-white'
+                  ? 'bg-primary-500 pointer-events-none text-white'
                   : 'hover:bg-gray-100'
               }`}
             >
