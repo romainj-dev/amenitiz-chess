@@ -3,7 +3,7 @@ export type Grandmaster = {
   name: string;
   country: string;
   countryCode: string;
-  avatar: string;
+  avatar?: string;
   fideRating: number;
   title: string;
   lastOnline: string;

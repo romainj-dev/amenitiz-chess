@@ -2,8 +2,9 @@ import { ArrowLeft, Circle, Crown, ExternalLink, MapPin } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { getGrandmaster } from '@/features/grandmasters/queries/get-grandmaster';
 import { formatDate, formatLastOnline } from '@/features/grandmasters/utils';
-import { getGrandmasterByUsername, getGrandmasterGames } from '@/lib/data';
+import { getGrandmasterGames } from '@/lib/data';
 import { grandmasterPath } from '@/paths';
 
 function getResultColor(result: string) {
@@ -38,7 +39,7 @@ interface PageProps {
 
 const GrandmasterDetailPage = async ({ params }: PageProps) => {
   const { username } = await params;
-  const grandmaster = getGrandmasterByUsername(username);
+  const grandmaster = await getGrandmaster(username);
 
   if (!grandmaster) {
     notFound();
@@ -64,8 +65,8 @@ const GrandmasterDetailPage = async ({ params }: PageProps) => {
             {/* Avatar */}
             <div className='relative'>
               <Image
-                src={grandmaster.avatar || '/placeholder.svg'}
-                alt={grandmaster.name}
+                src={grandmaster.avatar || '/user.svg'}
+                alt={grandmaster.username}
                 width={120}
                 height={120}
                 className='border-primary-100 shadow-medium rounded-full border-4'
@@ -94,7 +95,9 @@ const GrandmasterDetailPage = async ({ params }: PageProps) => {
               <div className='mb-4 flex items-center justify-center gap-4 md:justify-start'>
                 <div className='flex items-center gap-1'>
                   <MapPin className='text-accent-400 h-4 w-4' />
-                  <span className='text-accent-600'>{grandmaster.country}</span>
+                  <span className='text-accent-600'>
+                    {grandmaster.countryCode}
+                  </span>
                 </div>
                 <div className='flex items-center gap-1'>
                   <Circle

@@ -1,9 +1,11 @@
 import Link from 'next/link';
 import { GrandmasterItem } from '@/features/grandmasters/components/grandmaster-item';
-import { grandmasters } from '@/lib/data';
+import { getGrandmasters } from '@/features/grandmasters/queries/get-grandmasters';
 import { grandmasterDetailPath } from '@/paths';
 
-const GrandmastersPage = () => {
+const GrandmastersPage = async () => {
+  const grandmasters = await getGrandmasters();
+
   return (
     <div className='from-primary-50 to-accent-100 min-h-screen bg-gradient-to-br'>
       <div className='container mx-auto px-4 py-6'>
