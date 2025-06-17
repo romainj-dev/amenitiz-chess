@@ -1,25 +1,4 @@
-export interface Grandmaster {
-  username: string;
-  name: string;
-  country: string;
-  countryCode: string;
-  avatar: string;
-  fideRating: number;
-  title: string;
-  lastOnline: string;
-  joinedDate: string;
-  status: 'online' | 'offline';
-}
-
-export interface Game {
-  id: string;
-  opponent: string;
-  opponentRating: number;
-  result: 'win' | 'loss' | 'draw';
-  color: 'white' | 'black';
-  date: string;
-  gameUrl: string;
-}
+import { Game, Grandmaster } from '@/features/grandmasters/types';
 
 export const grandmasters: Grandmaster[] = [
   {
