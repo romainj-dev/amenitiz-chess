@@ -1,20 +1,9 @@
 import { MapPin } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { formatLastOnline } from '@/features/grandmasters/utils';
 import { grandmasters } from '@/lib/data';
 import { grandmasterDetailPath } from '@/paths';
-
-function formatLastOnline(dateString: string) {
-  const date = new Date(dateString);
-  const now = new Date();
-  const diffInHours = Math.floor(
-    (now.getTime() - date.getTime()) / (1000 * 60 * 60),
-  );
-
-  if (diffInHours < 1) return 'Just now';
-  if (diffInHours < 24) return `${diffInHours}h ago`;
-  return `${Math.floor(diffInHours / 24)}d ago`;
-}
 
 export default function GrandmastersPage() {
   return (
@@ -89,18 +78,6 @@ export default function GrandmastersPage() {
             </Link>
           ))}
         </div>
-
-        {/* No Results */}
-        {grandmasters.length === 0 && (
-          <div className='py-12 text-center'>
-            <div className='text-accent-400 mb-2 text-lg'>
-              No grandmasters found
-            </div>
-            <div className='text-accent-500'>
-              Try adjusting your search terms
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

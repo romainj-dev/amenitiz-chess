@@ -2,8 +2,35 @@ import { ArrowLeft, Circle, Crown, ExternalLink, MapPin } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { formatDate, formatLastOnline } from '@/features/grandmasters/utils';
 import { getGrandmasterByUsername, getGrandmasterGames } from '@/lib/data';
 import { grandmasterPath } from '@/paths';
+
+function getResultColor(result: string) {
+  switch (result) {
+    case 'win':
+      return 'text-success-600 bg-success-50 border border-success-200';
+    case 'loss':
+      return 'text-error-600 bg-error-50 border border-error-200';
+    case 'draw':
+      return 'text-secondary-700 bg-secondary-50 border border-secondary-200';
+    default:
+      return 'text-accent-600 bg-accent-50 border border-accent-200';
+  }
+}
+
+function getResultIcon(result: string) {
+  switch (result) {
+    case 'win':
+      return '1';
+    case 'loss':
+      return '0';
+    case 'draw':
+      return '½';
+    default:
+      return '-';
+  }
+}
 
 interface PageProps {
   params: Promise<{ username: string }>;
@@ -18,52 +45,6 @@ export default async function GrandmasterDetailPage({ params }: PageProps) {
   }
 
   const games = getGrandmasterGames();
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  };
-
-  const formatLastOnline = (dateString: string) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffInHours = Math.floor(
-      (now.getTime() - date.getTime()) / (1000 * 60 * 60),
-    );
-
-    if (diffInHours < 1) return 'Just now';
-    if (diffInHours < 24) return `${diffInHours} hours ago`;
-    return `${Math.floor(diffInHours / 24)} days ago`;
-  };
-
-  const getResultColor = (result: string) => {
-    switch (result) {
-      case 'win':
-        return 'text-success-600 bg-success-50 border border-success-200';
-      case 'loss':
-        return 'text-error-600 bg-error-50 border border-error-200';
-      case 'draw':
-        return 'text-secondary-700 bg-secondary-50 border border-secondary-200';
-      default:
-        return 'text-accent-600 bg-accent-50 border border-accent-200';
-    }
-  };
-
-  const getResultIcon = (result: string) => {
-    switch (result) {
-      case 'win':
-        return '1';
-      case 'loss':
-        return '0';
-      case 'draw':
-        return '½';
-      default:
-        return '-';
-    }
-  };
 
   return (
     <div className='from-primary-50 to-accent-100 min-h-screen bg-gradient-to-br'>
